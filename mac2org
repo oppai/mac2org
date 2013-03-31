@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -lt 1 ] ; then
+  echo "./mac2org [MAC ADDRESS]"
+	exit
+fi
+
+oui=`echo $1 | sed "s/://g" | sed "s/-//g" | tr "[a-z]" "[A-Z]"`
+
+if [ ${#oui} -gt 6 ] ; then
+  oui=`echo $oui | cut -c-6`
+fi
+
+echo `curl -s http://standards.ieee.org/develop/regauth/oui/oui.txt | grep -m 1 $oui`
+
